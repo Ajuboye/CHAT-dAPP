@@ -8,12 +8,12 @@ function App() {
 
   const sendMessage = () => {
     if (!input.trim()) return;
-    // Removed alert
+    // Removed alert popup
     setInput("");
   };
 
   return (
-    <div className="h-screen w-screen bg-black text-white font-mono flex flex-col overflow-hidden overscroll-none">
+    <div className="h-screen w-screen bg-black text-white font-mono flex flex-col overflow-hidden">
       {/* Top Header Bar */}
       <header className="flex items-center justify-between bg-[#0f0f0f] border-b border-green-600 px-4 py-2 text-xs sm:text-sm relative z-50">
         <div className="flex items-center gap-4">
@@ -31,7 +31,10 @@ function App() {
         <div className="hidden sm:flex items-center gap-4">
           <div className="flex items-center bg-[#1a1a1a] px-2 py-1 rounded-md border border-gray-700">
             <FaSearch className="text-gray-400 mr-2" />
-            <input className="bg-transparent outline-none text-white text-sm" placeholder="Search..." />
+            <input
+              className="bg-transparent outline-none text-white text-sm"
+              placeholder="Search..."
+            />
           </div>
           <FaPlus className="text-green-400 cursor-pointer" />
           <div className="flex items-center gap-1">
@@ -41,9 +44,9 @@ function App() {
         </div>
       </header>
 
-      {/* Sidebar Overlay for Mobile (Full screen like WhatsApp) */}
+      {/* Sidebar Overlay for Mobile */}
       {showSidebar && (
-        <div className="sm:hidden fixed inset-0 z-40 bg-[#121212] flex flex-col p-4 w-full h-full">
+        <div className="sm:hidden fixed inset-0 z-40 bg-[#121212] flex flex-col w-full h-full overflow-y-auto p-4">
           <div className="flex items-center justify-between mb-4">
             <span className="text-green-500 text-xs" style={{ fontFamily: "'Press Start 2P', monospace" }}>
               DE CRYPT
@@ -52,20 +55,26 @@ function App() {
               <FaTimes />
             </button>
           </div>
-          {/* Mobile Search & Add */}
+
+          {/* Mobile search & plus */}
           <div className="flex items-center bg-[#1a1a1a] px-2 py-1 rounded-md border border-gray-700 mb-4">
             <FaSearch className="text-gray-400 mr-2" />
-            <input className="bg-transparent outline-none text-white text-sm w-full" placeholder="Search..." />
+            <input
+              className="bg-transparent outline-none text-white text-sm w-full"
+              placeholder="Search..."
+            />
             <FaPlus className="text-green-400 ml-2 cursor-pointer" />
           </div>
-          {/* Chat List */}
-          <div className="flex-1 overflow-y-auto space-y-3">
+
+          {/* Chat list */}
+          <div className="flex-1 overflow-y-auto space-y-3 mb-24">
             <h2 className="text-green-500 text-sm">Chats</h2>
             <ul className="space-y-2">
               <li className="bg-green-900 text-green-300 p-2 rounded-md">AJ - Testing Chat 1</li>
-              <li className="bg-[#222] text-white p-2 rounded-md">Paddy - Let’s ship this dApp 🚀</li>
+              <li className="bg-[#222] text-white p-2 rounded-md">Paddy - Let's ship this dApp 🚀</li>
             </ul>
           </div>
+
           <button className="mt-4 bg-red-800 hover:bg-red-700 py-2 rounded-md text-white text-xs w-full">
             Sign Out
           </button>
@@ -79,7 +88,7 @@ function App() {
             <h2 className="text-green-500 text-sm">Chats</h2>
             <ul className="space-y-2">
               <li className="bg-green-900 text-green-300 p-2 rounded-md">AJ - Testing Chat 1</li>
-              <li className="bg-[#222] text-white p-2 rounded-md">Paddy - Let’s ship this dApp 🚀</li>
+              <li className="bg-[#222] text-white p-2 rounded-md">Paddy - Let's ship this dApp 🚀</li>
             </ul>
           </div>
           <button className="mt-4 bg-red-800 hover:bg-red-700 py-2 rounded-md text-white text-xs w-full">
@@ -93,8 +102,8 @@ function App() {
             <p className="text-gray-400">Chat messages will appear here.</p>
           </div>
 
-          {/* Chat Input - now sticky at bottom */}
-          <div className="p-4 border-t border-gray-700 bg-[#101010] flex gap-2 sticky bottom-0 z-50">
+          {/* Chat Input */}
+          <div className="p-4 border-t border-gray-700 bg-[#101010] flex gap-2">
             <input
               type="text"
               placeholder="Type message..."
