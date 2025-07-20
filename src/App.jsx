@@ -5,16 +5,17 @@ import "./index.css";
 function App() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]); // Store sent messages
 
   const sendMessage = () => {
     if (!input.trim()) return;
-    // Removed alert popup
+    setMessages((prev) => [...prev, input.trim()]);
     setInput("");
   };
 
   return (
-    <div className="h-screen w-screen bg-black text-white font-mono flex flex-col overflow-hidden">
-      {/* Top Header Bar */}
+    <div className="h-screen w-screen bg-black text-white font-mono flex flex-col">
+      {/* Header */}
       <header className="flex items-center justify-between bg-[#0f0f0f] border-b border-green-600 px-4 py-2 text-xs sm:text-sm relative z-50">
         <div className="flex items-center gap-4">
           <button
@@ -27,14 +28,10 @@ function App() {
             DE CRYPT
           </span>
         </div>
-
         <div className="hidden sm:flex items-center gap-4">
           <div className="flex items-center bg-[#1a1a1a] px-2 py-1 rounded-md border border-gray-700">
             <FaSearch className="text-gray-400 mr-2" />
-            <input
-              className="bg-transparent outline-none text-white text-sm"
-              placeholder="Search..."
-            />
+            <input className="bg-transparent outline-none text-white text-sm" placeholder="Search..." />
           </div>
           <FaPlus className="text-green-400 cursor-pointer" />
           <div className="flex items-center gap-1">
@@ -44,7 +41,7 @@ function App() {
         </div>
       </header>
 
-      {/* Sidebar Overlay for Mobile */}
+      {/* Sidebar on Mobile */}
       {showSidebar && (
         <div className="sm:hidden fixed inset-0 z-40 bg-[#121212] flex flex-col w-full h-full overflow-y-auto p-4">
           <div className="flex items-center justify-between mb-4">
@@ -55,18 +52,11 @@ function App() {
               <FaTimes />
             </button>
           </div>
-
-          {/* Mobile search & plus */}
           <div className="flex items-center bg-[#1a1a1a] px-2 py-1 rounded-md border border-gray-700 mb-4">
             <FaSearch className="text-gray-400 mr-2" />
-            <input
-              className="bg-transparent outline-none text-white text-sm w-full"
-              placeholder="Search..."
-            />
+            <input className="bg-transparent outline-none text-white text-sm w-full" placeholder="Search..." />
             <FaPlus className="text-green-400 ml-2 cursor-pointer" />
           </div>
-
-          {/* Chat list */}
           <div className="flex-1 overflow-y-auto space-y-3 mb-24">
             <h2 className="text-green-500 text-sm">Chats</h2>
             <ul className="space-y-2">
@@ -74,15 +64,15 @@ function App() {
               <li className="bg-[#222] text-white p-2 rounded-md">Paddy - Let's ship this dApp 🚀</li>
             </ul>
           </div>
-
           <button className="mt-4 bg-red-800 hover:bg-red-700 py-2 rounded-md text-white text-xs w-full">
             Sign Out
           </button>
         </div>
       )}
 
+      {/* Main content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar for Desktop */}
+        {/* Sidebar Desktop */}
         <aside className="bg-[#121212] border-r border-gray-700 p-4 flex-col justify-between transition-all duration-300 z-10 hidden sm:flex w-64">
           <div className="flex-1 space-y-3 overflow-y-auto">
             <h2 className="text-green-500 text-sm">Chats</h2>
@@ -97,13 +87,24 @@ function App() {
         </aside>
 
         {/* Chat Window */}
-        <main className="flex-1 flex flex-col">
-          <div className="flex-1 bg-[#0A0A0A] p-4 overflow-y-auto">
-            <p className="text-gray-400">Chat messages will appear here.</p>
+        <main className="flex-1 flex flex-col relative">
+          {/* Message area */}
+          <div className="flex-1 bg-[#0A0A0A] p-4 overflow-y-auto space-y-3">
+            {messages.length === 0 ? (
+              <p className="text-gray-400">Chat messages will appear here.</p>
+            ) : (
+              messages.map((msg, i) => (
+                <div key={i} className="flex justify-end">
+                  <div className="bg-green-700 text-white px-4 py-2 rounded-xl text-sm max-w-xs break-words">
+                    {msg}
+                  </div>
+                </div>
+              ))
+            )}
           </div>
 
-          {/* Chat Input */}
-          <div className="p-4 border-t border-gray-700 bg-[#101010] flex gap-2">
+          {/* Chat Input fixed */}
+          <div className="p-4 border-t border-gray-700 bg-[#101010] flex gap-2 sticky bottom-0">
             <input
               type="text"
               placeholder="Type message..."
